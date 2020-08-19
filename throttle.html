@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节流</title>
+</head>
+<body>
+    <div>
+        <button id='button1'>节流</button>
+    </div>
+    <script>
+        window.onload = function(){
+            const button = document.getElementById('button1')
+            function clickButton(a) {
+                console.log(a);
+                return a
+            }
+            //时间差类型
+            // function throttle(func, wait) {
+            //     let  context,arg
+            //     let previous = 0;
+            //     return function() {
+            //         const now = +new Date();
+            //         context = this
+            //         arg = arguments
+            //         if(now - previous > wait){
+            //             func.apply(context, arg)
+            //             previous = now
+            //         }
+            //     }
+            // }
+            //定时器类型
+            // function throttle(func, wait) {
+            //     let context, arg, timer
+            //     return function() {
+            //         context = this
+            //         arg = arguments
+            //     if(!timer) {
+            //         setTimeout(() => {
+            //             timer = null
+            //             func.apply(context,arg)
+            //         }, wait)
+            //         }
+            //     }
+            // }
+            // function throttle(func, wait) {
+            //     let context, arg, previous = 0, result,timer
+            //     const later = function() {
+            //         previous = +new Date()
+            //         timer = null
+            //         result = func.apply(context, arg)
+            //     }
+            //     const throttle = function () {
+            //         context = this
+            //         arg = arguments
+            //         var now = +new Date()
+            //         var remaining = wait - (now - previous)
+            //         if(remaining <= 0 || remaining > wait) {
+            //             if(timer) {
+            //                clearTimeout(timer)
+            //                timer = null
+            //             }
+            //             previous = now;
+            //             func.apply(context, arg)
+            //         } else if(!timer){
+            //             timer = setTimeout(later, remaining)
+            //         }
+            //     }
+            //     return throttle
+            // }
+            //练习第一次
+            // function throttle(func, wait) {
+            //     let context, timer, arg, previous = 0, remaining
+            //     const later = function () {
+            //         previous = +new Date()
+            //         timer = null
+            //         func.apply(context, arg)
+            //     }
+            //     const throttle = function() {
+            //         context = this
+            //         let now = +new Date()
+            //         arg = arguments
+            //         remaining = wait - (now - previous)
+            //         if(remaining <= 0 || remaining > wait) {
+            //             if(timer) {
+            //                 clearTimeout(timer)
+            //                 timer = null
+            //             }
+            //             previous = now
+            //             func.apply(context, arg)
+            //         } else if (!timer) {
+            //             timer = setTimeout(later, remaining)
+            //         }
+            //     }
+            //     return throttle
+            // }
+            //practice2
+            function throttle(func, wait) {
+                let context, arg, previous = 0, remaining, timer 
+                const later = function() {
+                    previous = +new Date();
+                    timer = null;
+                    func.apply(context, arg)
+                }
+                const throttle = function() {
+                    context = this
+                    arg = arguments
+                    now = +new Date()
+                    remaining = wait - (now - previous)
+                    if(remaining <= 0 || remaining > wait) {
+                        if(timer) {
+                            clearTimeout(timer)
+                            timer = null
+                        }
+                        previous = now
+                        func.apply(context, arg)
+                    }else if(!timer){
+                        timer = setTimeout(later, remaining);
+                    }
+                }
+                return throttle
+            }
+            button.onclick = throttle(clickButton, 2000)
+        }
+    </script>
+</body>
+</html>

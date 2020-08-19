@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖</title>
+</head>
+<body>
+    <div>
+        <button id='button1'>防抖</button>
+    </div>
+    <script>
+        window.onload = function(){
+            const button = document.getElementById('button1')
+            function clickButton(a) {
+                console.log(a);
+            }
+            function debounce(func, wait, immediate) {
+            let arg,context,result,timer
+            const debounce = function () {
+                context = this
+                arg = arguments
+                if(timer) clearTimeout(timer)
+                if (immediate) {
+                    let callNow = !timer
+                    timer = setTimeout(() => {
+                        timer = null
+                    }, wait);
+                    if(callNow) result = func.apply(context, arg)
+                } else {
+                    timer = setTimeout(() => {
+                        func.apply(context, arg)
+                    }, wait);
+                }
+            }
+            debounce.cancel = function () {
+                if(timer) {
+                    clearTimeout(timer)
+                    timer = null
+                }
+            }
+            return debounce
+        }
+            button.onclick = debounce(clickButton, 2000, true)
+        }
+        //第一次练手
+        // function debounce(func, wait, immdiate){
+        //     let timer, result
+        //     var debounce = function (){
+        //         const context = this
+        //         const arg = arguments
+        //         if(timer) clearTimeout(timer)
+        //         if (immdiate) {
+        //             var callNow = !timer
+        //             timer = setTimeout(() => {
+        //                 timer = null
+        //             }, wait);
+        //             if (callNow) result = func.apply(context, arg)
+        //         } else {
+        //             timer = setTimeout(() => {
+        //                 func.apply(context, arg)
+        //             }, wait);
+        //         }
+        //     debounce.cancel = function (){
+        //         clearTimeout(timer)
+        //         timer = null
+        //     }
+        //     return debounce;
+        //     }
+        // }
+        //第二次练习
+        function debounce(func, wait, immediate) {
+            let arg, context, result
+            const debounce = function () {
+                context = this
+                arg = arguments
+                if(timer) clearTimeout(timer)
+                if(immediate) {
+                    var callNow = !timer
+                    timer = setTimeout(() => {
+                        timer = null
+                    }, wait)  
+                    if(callNow) result = func.apply(context, arg)
+                } else {
+                    timer = setTimeout(() => {
+                        func.apply(context, arg)
+                    }, wait)
+                }
+            }
+            debounce.cancel = function () {
+                clearTimeout(timer)
+                timer = null
+            }
+            return debounce
+        }
+        //第三次练习
+        function debounce(func, wait, immediate) {
+            let arg,context,result,timer
+            const debounce = function () {
+                context = this
+                arg = arguments
+                if(timer) clearTimeout(timer)
+                if (immediate) {
+                    let callNow = !timer
+                    timer = setTimeout(() => {
+                        timer = null
+                    }, wait);
+                    if(callNow) result = func.apply(context, arg)
+                } else {
+                    timer = setTimeout(() => {
+                        func.apply(context, arg)
+                    }, wait);
+                }
+            }
+            debounce.cancel = function () {
+                if(timer) {
+                    clearTimeout(timer)
+                    timer = null
+                }
+            }
+            return debounce
+        }
+    </script>
+</body>
+</html>
